@@ -18,12 +18,14 @@ include(${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 # Add library project
 set(LIB_PROJECT ${CMAKE_PROJECT_NAME}_LIB)
-add_library(${LIB_PROJECT} include/GenericPointSet.h src/GenericPointSet.cpp
-        src/GenericPointSet.cpp)
+add_library(${LIB_PROJECT}
+        include/attribute.h
+        include/generic_point_set.h
+        src/generic_point_set.cpp)
 target_include_directories(${LIB_PROJECT} PRIVATE include)
 
 # Add executable project
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp
+add_executable(${CMAKE_PROJECT_NAME}
         src/main.cpp)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE include)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${LIB_PROJECT})
@@ -35,10 +37,16 @@ include(GoogleTest)
 
 # Add test project
 set(TEST_PROJECT ${CMAKE_PROJECT_NAME}_TEST)
-add_executable(${TEST_PROJECT} test/test_main.cpp test/GenericPointSet.cpp
-        test/GenericPointSet.cpp)
+add_executable(${TEST_PROJECT}
+        test/test_main.cpp
+        test/generic_point_set_tests.cpp)
 target_include_directories(${TEST_PROJECT} PRIVATE include)
-target_link_libraries(${TEST_PROJECT} PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main ${LIB_PROJECT})
+target_link_libraries(${TEST_PROJECT} PRIVATE
+        GTest::gtest
+        GTest::gtest_main
+        GTest::gmock
+        GTest::gmock_main
+        ${LIB_PROJECT})
 
 # Automatically discover and add tests
 gtest_discover_tests(${TEST_PROJECT})
