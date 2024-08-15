@@ -5,17 +5,16 @@
 
 int main(int argc, char* argv[])
 {
-	auto points_raw = GenericPointSet(new double[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, 3);
+	auto points_raw = GenericPointSet(std::vector<double>{1, 2, 3, 4, 5, 6, 7, 8, 9}, 3);
 
-	points_raw.AddAttribute(attribute_enum::int_index, new int[]{1, 2, 3}, 1);
+	points_raw.AddAttribute(attribute_enum::index, std::vector<int>{1, 2, 3}, 1);
 	// points_raw.AddAttribute(attribute_enum::normal, new float[]{0.f, 0.f, 1.f, 0.f, 1.f, 0.f, 1.f, 0.f, 0.f}, 3);
 
 	const auto attributes = points_raw.GetAllAttributeTypes();
 
 	points_raw.SortAttributes(std::vector<size_t>{2,1,0});
 
-	// auto positions = points_raw.GetPositions();
-	auto raw_indices = points_raw.GetAttribute<int>(attribute_enum::int_index);
+	const auto raw_indices = points_raw.GetAttributeData(attribute_enum::index);
 
 	std::cout << "Indices: " <<
 		raw_indices[0] << " " <<
