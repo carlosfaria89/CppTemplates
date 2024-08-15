@@ -34,3 +34,5 @@
 # Folders
 build/
 CMakeFiles/
+.idea
+cmake-build-debug-visual-studio
